@@ -53,6 +53,13 @@ fun NavGraphBuilder.productDetail(
     }
 }
 
+
+/**
+ * Main composable for the product detail screen.
+ *
+ * Displays details of selected product, loading indicator,
+ * and error handling.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailScreen (
@@ -85,6 +92,7 @@ fun ProductDetailScreen (
                 }
             }
 
+            // Error state
             state.error != null -> {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -106,6 +114,7 @@ fun ProductDetailScreen (
                 }
             }
 
+            // Success state
             state.product != null -> {
                 Column(
                     modifier = Modifier

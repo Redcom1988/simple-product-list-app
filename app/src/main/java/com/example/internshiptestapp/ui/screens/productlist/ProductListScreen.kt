@@ -42,6 +42,15 @@ fun NavGraphBuilder.productList(
     }
 }
 
+
+/**
+ * Main composable for the product list screen.
+ *
+ * Displays a list of products with search functionality, loading indicator,
+ * and error handling.
+ *
+ * @param onNavigateToDetail Callback for when a product is selected
+ */
 @Composable
 fun ProductListScreen(
     viewModel: ProductListViewModel,
@@ -54,7 +63,7 @@ fun ProductListScreen(
             onQueryChange = { viewModel.onSearchQueryChange(it) }
         )
         when {
-            // Show loading indicator
+            // Loading state
             state.isLoading -> {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -64,7 +73,7 @@ fun ProductListScreen(
                 }
             }
 
-            // Show error message
+            // Error state
             state.error != null -> {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -82,7 +91,7 @@ fun ProductListScreen(
                 }
             }
 
-            // Show product list
+            // Success State
             else -> {
                 LazyColumn {
                     items(state.filteredProducts) { product ->

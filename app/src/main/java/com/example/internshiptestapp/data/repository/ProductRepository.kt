@@ -13,6 +13,13 @@ import com.composables.icons.lucide.Smartphone
 import com.composables.icons.lucide.Tablet
 import com.example.internshiptestapp.data.model.Product
 
+/**
+ * Repository for accessing product data.
+ *
+ * In a real application, this would fetch data from a local database or remote API.
+ * For this simple application, it provides a hard-coded list of products.
+ */
+
 object ProductRepository {
     private val productList = listOf(
         Product(
@@ -87,10 +94,21 @@ object ProductRepository {
         )
     )
 
+    /**
+     * Returns the complete list of all available products.
+     *
+     * @return List of Product objects
+     */
     fun getProducts(): List<Product> {
         return productList
     }
 
+    /**
+     * Finds and returns a specific product by its ID.
+     *
+     * @param id The unique identifier of the product to find
+     * @return The Product if found, or null if no product matches the given ID
+     */
     fun getProductById(id: Int): Product? {
         return productList.find { it.id == id }
     }
