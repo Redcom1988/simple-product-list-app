@@ -1,11 +1,10 @@
 package com.example.internshiptestapp.ui.screens.productlist
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.internshiptestapp.data.model.Product
 import com.example.internshiptestapp.data.repository.ProductRepository
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
@@ -57,6 +56,7 @@ class ProductListViewModel : ViewModel() {
         }
     }
 
+    @OptIn(FlowPreview::class)
     private fun setupSearchDebouncing() {
         // Set up search query debouncing to avoid filtering on every keystroke
         _state
@@ -103,13 +103,6 @@ class ProductListViewModel : ViewModel() {
                     error = "Failed to filter products: ${e.message}"
                 )
             }
-        }
-    }
-
-    fun retryFiltering() {
-        val currentQuery = _state.value.searchQuery
-        if (currentQuery.isNotEmpty()) {
-            performFiltering(currentQuery)
         }
     }
 
