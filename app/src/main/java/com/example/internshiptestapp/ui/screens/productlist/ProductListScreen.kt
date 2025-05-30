@@ -33,8 +33,9 @@ fun NavGraphBuilder.productList(
         val state by viewModel.state.collectAsState()
 
         ProductListScreen(
-            viewModel = viewModel,
             state = state,
+            onRefresh = { viewModel.refreshProducts() },
+            onSearchQueryChange = { query -> viewModel.onSearchQueryChange(query) },
             onNavigateToDetail = { productId ->
                 onNavigateToDetail(productId)
             }
@@ -53,14 +54,15 @@ fun NavGraphBuilder.productList(
  */
 @Composable
 fun ProductListScreen(
-    viewModel: ProductListViewModel,
     state: ProductListState = ProductListState(),
+    onRefresh: () -> Unit = {},
+    onSearchQueryChange: (String) -> Unit = {},
     onNavigateToDetail: (Int) -> Unit = {}
 ) {
     Column {
         SearchBar(
             query = state.searchQuery,
-            onQueryChange = { viewModel.onSearchQueryChange(it) }
+            onQueryChange = { newQuery -> onSearchQueryChange(newQuery) }
         )
         when {
             // Loading state
@@ -84,7 +86,7 @@ fun ProductListScreen(
                             text = state.error,
                             modifier = Modifier.padding(16.dp)
                         )
-                         Button(onClick = viewModel::refreshProducts) {
+                         Button(onClick = onRefresh) {
                              Text("Retry")
                          }
                     }
