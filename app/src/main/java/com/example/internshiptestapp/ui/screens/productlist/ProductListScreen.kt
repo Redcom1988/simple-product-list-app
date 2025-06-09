@@ -14,10 +14,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.example.internshiptestapp.data.repository.ProductRepository
 import com.example.internshiptestapp.ui.components.ProductItem
 import com.example.internshiptestapp.ui.components.SearchBar
 import kotlinx.serialization.Serializable
@@ -95,7 +97,9 @@ fun ProductListScreen(
 
             // Success State
             else -> {
-                LazyColumn {
+                LazyColumn (
+                    modifier = Modifier.padding(8.dp)
+                ) {
                     items(state.filteredProducts) { product ->
                         ProductItem(
                             product = product,
@@ -108,4 +112,15 @@ fun ProductListScreen(
             }
         }
     }
+}
+
+@Preview(showBackground = false)
+@Composable
+private fun PreviewProductListScreen() {
+    ProductListScreen(
+        state = ProductListState(
+            products = ProductRepository.getProducts(),
+            filteredProducts = ProductRepository.getProducts()
+        )
+    ) {}
 }
